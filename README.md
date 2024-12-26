@@ -1,9 +1,24 @@
-# React + Vite
+# My Chat Application 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a chat app for learning both frontend and backend technology.
 
-Currently, two official plugins are available:
+Live link: https://emaduddins-chat-app.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# Frontend-Site-of-Chat-App
+<br>
+
+Step 1: copy and paste into the terminal:
+```
+git clone https://github.com/emaduddin678/Frontend-Site-of-Chat-App.git
+```
+Step 2:
+```
+cd Frontend-Site-of-Chat-App
+```
+Step 3:
+```
+npm install
+```
+Step 4:
+```
+npm run dev
+```
