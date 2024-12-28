@@ -18,12 +18,7 @@ import toast from "react-hot-toast";
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const { signup, isSigningUp } = useAuthStore();
 
   const onSubmit = (data) => {

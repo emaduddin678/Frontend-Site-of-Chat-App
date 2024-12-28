@@ -10,19 +10,25 @@ const useAuthStore = create((set) => ({
 
   isCheckingAuth: true,
 
-  setAuthUser: (user) => {
-    set({ authUser: user });
-  }, // Method to update authUser
-  setIsSigningUp: (status) => set({ isSigningUp: status }), // Method to update isSigningUp
-  setIsLoggingIn: (status) => set({ isLoggingIn: status }), // Method to update isLoggingIn
-  setIsUpdatingProfile: (status) => set({ isUpdatingProfile: status }), // Method to update isUpdatingProfile
-  setIsCheckingAuth: (status) => set({ isCheckingAuth: status }), // Method to update isCheckingAuth
+  checkAuth: async () => {
+    try {
+      const res = await axiosInstance.get("/auth/check");
+
+      set({ authUser: res.data.payload.user });
+      // get().connectSocket();
+    } catch (error) {
+      console.log("Error in checkAuth:", error);
+      set({ authUser: null });
+    } finally {
+      set({ isCheckingAuth: false });
+    }
+  },
   signup: async (data) => {
     set({ isSigningUp: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
       console.log(res.data);
-      set({ authUser: res.data });
+      set({ authUser: res.data.payload.user });
       toast.success("Account created successfully");
       // get().connectSocket();
     } catch (error) {
@@ -32,23 +38,16 @@ const useAuthStore = create((set) => ({
       set({ isSigningUp: false });
     }
   },
-  // try {
-  //   const res = await axiosInstance.get("/auth/check");
-  //   console.log(res)
-  //   set({ authUser: res.data });
-  // } catch (error) {
-  //     console.log("Error in checkAuth", error)
-  //   set({ authUser: null });
-  // } finally {
-  //   set({ isCheckingAuth: false });
-  // }
-  //   checkAuth: () => {
-  //     useQuery({
-  //       queryKey: ["authUser"],
-  //       queryFn: () =>
-  //         axiosInstance.get("/auth/check").then((res) => console.log(res)),
-  //     });
-  //   },
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logged out successfully");
+      // get().disconnectSocket();
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  },
 }));
 
 export default useAuthStore;

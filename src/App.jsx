@@ -13,16 +13,11 @@ import "ldrs/lineSpinner";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { authUser, setAuthUser, isCheckingAuth, setIsCheckingAuth } =
-    useAuthStore();
-
-  const { data, isFetching, isLoading, isPending, refetch } = useCheckAuth();
-
+  const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
+  console.log(authUser);
   useEffect(() => {
-    refetch();
-    // data && setAuthUser(data[0]);
-    setIsCheckingAuth(isLoading);
-  }, [refetch]);
+    checkAuth();
+  }, [checkAuth]);
 
   if (isCheckingAuth && !authUser) {
     return (
