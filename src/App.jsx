@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import useAuthStore from "./store/useAuthStore";
 import useCheckAuth from "./hooks/useCheckAuth";
 import "ldrs/lineSpinner";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, setAuthUser, isCheckingAuth, setIsCheckingAuth } =
@@ -21,7 +22,7 @@ function App() {
     refetch();
     // data && setAuthUser(data[0]);
     setIsCheckingAuth(isLoading);
-  }, [data]);
+  }, [refetch]);
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -37,27 +38,30 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<HomeLayout />}>
-        <Route
-          index
-          element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />}
-        />
-        <Route
-          path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
-        />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route
-          path="/profile"
-          element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
-        />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<HomeLayout />}>
+          <Route
+            index
+            element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/signup"
+            element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/login"
+            element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+          />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route
+            path="/profile"
+            element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
+          />
+        </Route>
+      </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
+    </>
   );
 }
 

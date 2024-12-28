@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
-import { useQuery } from "@tanstack/react-query";
-import useCheckAuth from "../hooks/useCheckAuth";
+import toast from "react-hot-toast";
 
 const useAuthStore = create((set) => ({
   authUser: null,
@@ -18,7 +17,21 @@ const useAuthStore = create((set) => ({
   setIsLoggingIn: (status) => set({ isLoggingIn: status }), // Method to update isLoggingIn
   setIsUpdatingProfile: (status) => set({ isUpdatingProfile: status }), // Method to update isUpdatingProfile
   setIsCheckingAuth: (status) => set({ isCheckingAuth: status }), // Method to update isCheckingAuth
-
+  signup: async (data) => {
+    set({ isSigningUp: true });
+    try {
+      const res = await axiosInstance.post("/auth/signup", data);
+      console.log(res.data);
+      set({ authUser: res.data });
+      toast.success("Account created successfully");
+      // get().connectSocket();
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isSigningUp: false });
+    }
+  },
   // try {
   //   const res = await axiosInstance.get("/auth/check");
   //   console.log(res)
