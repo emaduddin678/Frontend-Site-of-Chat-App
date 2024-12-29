@@ -11,9 +11,12 @@ import useAuthStore from "./store/useAuthStore";
 import useCheckAuth from "./hooks/useCheckAuth";
 import "ldrs/lineSpinner";
 import { Toaster } from "react-hot-toast";
+import { useThemeStore } from "./store/useThemeStore";
 
 function App() {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
+  const { theme } = useThemeStore();
+
   console.log(authUser);
   useEffect(() => {
     checkAuth();
@@ -33,7 +36,7 @@ function App() {
   }
 
   return (
-    <>
+    <div data-theme={theme}>
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route
@@ -56,7 +59,7 @@ function App() {
         </Route>
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
-    </>
+    </div>
   );
 }
 
