@@ -24,12 +24,15 @@ function App() {
 
   if (isCheckingAuth && !authUser) {
     return (
-      <div className=" h-screen w-full flex justify-center items-center">
+      <div
+        data-theme={theme}
+        className=" h-screen w-full flex justify-center items-center"
+      >
         <l-line-spinner
-          size="180"
+          size="280"
           stroke="6"
           speed=".8"
-          color="red"
+          color="white"
         ></l-line-spinner>
       </div>
     );

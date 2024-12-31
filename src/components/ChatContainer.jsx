@@ -61,6 +61,7 @@ const ChatContainer = () => {
             }`}
             ref={messageEndRef}
           >
+            {console.log(message)}
             <div className=" chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
@@ -79,9 +80,9 @@ const ChatContainer = () => {
               </time>
             </div>
             <div className="chat-bubble flex flex-col">
-              {message.image && (
+              {message.imageUrl && (
                 <img
-                  src={message.image}
+                  src={message.imageUrl}
                   alt="Attachment"
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />
