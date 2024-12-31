@@ -7,7 +7,7 @@ const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, isSendingMessage } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -20,6 +20,7 @@ const MessageInput = () => {
     reader.onloadend = () => {
       setImagePreview(reader.result);
     };
+
     reader.readAsDataURL(file);
   };
 
@@ -30,10 +31,11 @@ const MessageInput = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!text.trim() && !imagePreview) return;
-
+    console.log("Hello");
+    if ((!text.trim() && !imagePreview) || isSendingMessage) return;
+    console.log("Hello");
     try {
-      console.log(imagePreview)
+      // console.log(imagePreview);
       await sendMessage({
         text: text.trim(),
         image: imagePreview,

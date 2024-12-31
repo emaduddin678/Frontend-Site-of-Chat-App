@@ -47,7 +47,7 @@ const ChatContainer = () => {
       </div>
     );
   }
-
+console.log(messages)
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
@@ -61,14 +61,14 @@ const ChatContainer = () => {
             }`}
             ref={messageEndRef}
           >
-            {console.log(message)}
+            {/* {console.log(message)} */}
             <div className=" chat-image avatar">
               <div className="size-10 rounded-full border">
                 <img
                   src={
                     message.senderId === authUser._id
-                      ? authUser.profilePic || "/avatar.png"
-                      : selectedUser.profilePic || "/avatar.png"
+                      ? authUser.profile_pic || "/avatar.png"
+                      : selectedUser.profile_pic || "/avatar.png"
                   }
                   alt="profile pic"
                 />

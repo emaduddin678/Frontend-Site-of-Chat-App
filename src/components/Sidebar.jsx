@@ -14,7 +14,7 @@ const Sidebar = () => {
   useEffect(() => {
     getUsers();
   }, [getUsers]);
-  console.log(users)
+  console.log(users);
 
   const filteredUsers = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
@@ -41,7 +41,7 @@ const Sidebar = () => {
             <span className="text-sm">Show online only</span>
           </label>
           <span className="text-xs text-zinc-500">
-            ({onlineUsers.length - 1} online)
+            ({onlineUsers.length ? onlineUsers.length - 1 : 0} online)
           </span>
         </div>
       </div>
@@ -63,7 +63,7 @@ const Sidebar = () => {
           >
             <div className="relative mx-auto lg:mx-0">
               <img
-                src={user.profilePic || "/avatar.png"}
+                src={user.profile_pic || "/avatar.png"}
                 alt={user.name}
                 className="size-12 object-cover rounded-full"
               />
@@ -77,7 +77,7 @@ const Sidebar = () => {
 
             {/* User info - only visible on larger screens */}
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate">{user.fullName}</div>
+              <div className="font-medium truncate">{user.name}</div>
               <div className="text-sm text-zinc-400">
                 {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </div>
