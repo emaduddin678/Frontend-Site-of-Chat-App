@@ -1,21 +1,24 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
+import { serverApi } from "../../secretData.js";
 
-const useAuthStore = create((set) => ({
+const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
   onlineUsers: [],
   isCheckingAuth: true,
+  socket: null,
 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("/auth/check");
 
       set({ authUser: res.data.payload.user });
-      // get().connectSocket();
+      get().connectSocket();
     } catch (error) {
       console.log("Error in checkAuth:", error);
       set({ authUser: null });
@@ -30,7 +33,7 @@ const useAuthStore = create((set) => ({
       console.log(res.data);
       set({ authUser: res.data.payload.user });
       toast.success("Account created successfully");
-      // get().connectSocket();
+      get().connectSocket();
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -45,7 +48,7 @@ const useAuthStore = create((set) => ({
       set({ authUser: res.data.payload.user });
       toast.success("Logged in successfully");
 
-      // get().connectSocket();
+      get().connectSocket();
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {
@@ -57,7 +60,7 @@ const useAuthStore = create((set) => ({
       await axiosInstance.post("/auth/logout");
       set({ authUser: null });
       toast.success("Logged out successfully");
-      // get().disconnectSocket();
+      get().disConnectSocket();
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -74,6 +77,18 @@ const useAuthStore = create((set) => ({
     } finally {
       set({ isUpdatingProfile: false });
     }
+  },
+
+  connectSocket: () => {
+    const { authUser, socket } = get();
+    if (!authUser || socket?.connected) return;
+    const mySocket = io(serverApi);
+    mySocket.connect();
+    set({ socket: mySocket });
+  },
+  disConnectSocket: () => {
+    const { socket } = get();
+    if (socket?.connected) socket.disconnect();
   },
 }));
 

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { serverApi } from "../../secretData.js";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: `${serverApi}/api`,
   withCredentials: true,
 });
 
