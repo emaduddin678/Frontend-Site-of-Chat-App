@@ -4,6 +4,7 @@ import AuthImagePattern from "../components/AuthImagePattern";
 import { Link } from "react-router";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
